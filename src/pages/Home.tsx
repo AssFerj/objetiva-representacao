@@ -88,7 +88,7 @@ export default function Home() {
                     <button
                         onClick={() => setSelectedBrand(selectedBrand === brand.name ? null : brand.name)}
                         className={`w-full h-32 bg-white rounded-lg p-4 transition-transform hover:scale-105 ${
-                        selectedBrand === brand.name ? 'ring-2 ring-blue-500' : ''
+                        selectedBrand === brand.name ? 'ring-2 ring-blue-950' : ''
                         }`}
                     >
                         <img
