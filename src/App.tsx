@@ -17,18 +17,18 @@ function App(): JSX.Element {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-blue-600 text-white">
+      <header className="bg-blue-950 text-white">
         <div className="container mx-auto px-4 py-2">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               <Phone size={18} />
-              <span>(11) 4444-5555</span>
+              <span>(88) 99265-6171</span>
               <Mail size={18} />
               <span>contato@objetivarepresentacoes.com.br</span>
             </div>
             <div className="flex items-center">
               <MapPin size={18} className="mr-2" />
-              <span>São Paulo, SP</span>
+              <span>Camocim, CE</span>
             </div>
           </div>
         </div>
@@ -61,7 +61,7 @@ function App(): JSX.Element {
           <div className="text-white max-w-2xl">
             <h1 className="text-5xl font-bold mb-6">Excelência em Distribuição de Materiais de Limpeza</h1>
             <p className="text-xl mb-8">Fornecendo as melhores soluções em produtos de limpeza para sua empresa</p>
-            <button className="bg-blue-600 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-700 transition">
+            <button className="bg-blue-950 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-950 transition">
               Saiba mais
               <ChevronRight size={20} className="ml-2" />
             </button>
@@ -74,21 +74,21 @@ function App(): JSX.Element {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-blue-950 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="text-blue-600 w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Entrega Rápida</h3>
               <p className="text-gray-600">Logística eficiente para atender suas necessidades com agilidade</p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-blue-950 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <BadgeCheck className="text-blue-600 w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Qualidade Garantida</h3>
               <p className="text-gray-600">Produtos de alta qualidade das melhores marcas do mercado</p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md text-center">
-              <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-blue-950 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Users className="text-blue-600 w-8 h-8" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Atendimento Personalizado</h3>
@@ -101,7 +101,7 @@ function App(): JSX.Element {
       {/* Brands and Products Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Nossas Marcas</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">Nossas Representadas</h2>
           
           {/* Brands Slider */}
           <div className="mb-16">
@@ -163,13 +163,13 @@ function App(): JSX.Element {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
+      <footer className="bg-blue-950 text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center mb-4">
                 <Building2 size={24} className="mr-2" />
-                <span className="text-xl font-bold">Objetiva</span>
+                <span className="text-xl font-bold">Objetiva Representações</span>
               </div>
               <p className="text-gray-400">Sua parceira em soluções de limpeza profissional</p>
             </div>
@@ -178,7 +178,7 @@ function App(): JSX.Element {
               <div className="space-y-2 text-gray-400">
                 <p className="flex items-center">
                   <Phone size={18} className="mr-2" />
-                  (11) 4444-5555
+                  (88) 99265-6171
                 </p>
                 <p className="flex items-center">
                   <Mail size={18} className="mr-2" />
@@ -186,7 +186,7 @@ function App(): JSX.Element {
                 </p>
                 <p className="flex items-center">
                   <MapPin size={18} className="mr-2" />
-                  São Paulo, SP
+                  Camocim, CE
                 </p>
               </div>
             </div>
