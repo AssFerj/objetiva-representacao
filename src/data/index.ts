@@ -1,11 +1,11 @@
 import { Brand, Product } from '../types';
 
 export const brands: Brand[] = [
-  { id: 1, name: 'Omo Professional', logo: 'https://images.unsplash.com/photo-1598302936625-6075fbd98dd8?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80' },
-  { id: 2, name: 'Veja', logo: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80' },
-  { id: 3, name: 'Brilhante', logo: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80' },
-  { id: 4, name: 'Johnson', logo: 'https://images.unsplash.com/photo-1584735174914-6b1272458e3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80' },
-  { id: 5, name: 'Kimberly-Clark', logo: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=100&q=80' },
+  { id: 1, name: 'Limpemax', logo: '/assets/brands/limpemax.png' },
+  { id: 2, name: 'Liz Embalagens', logo: '/assets/brands/liz.png' },
+  { id: 3, name: 'Perfil Papéis', logo: '/assets/brands/perfil.png' },
+  { id: 4, name: 'Petyan', logo: '/assets/brands/petyan.png' },
+  { id: 5, name: 'Cristal', logo: '/assets/brands/cristal.png' },
 ];
 
 export const products: Product[] = [
