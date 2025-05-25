@@ -77,7 +77,7 @@ export default function Home() {
                     <h2 className="text-5xl text-blue-950 font-bold text-center mb-16">Entre em Contato</h2>
                     <div className="flex flex-col md:flex-row justify-center gap-8">
                         <div className="flex flex-1 flex-col items-start gap-2 md:gap-4">
-                            <p className="text-gray-600 mb-4 max-w-[300px]">Se precisa de produto de alta qualidade com ótimo custo benefício não escite em entrar em contato.</p>
+                            <p className="text-gray-600 mb-4 max-w-[300px]">Seu empreendimento precisa de produtos de alta qualidade com ótimo custo benefício?<br/>Então não hesite em entrar em contato, nossos mix vai ajudar a elevar seus resultados.</p>
                             <a href="https://wa.me/5588992545339" className="flex items-center gap-2 hover:text-blue-950 transition" target="_blank" rel="noopener noreferrer">
                                 <Phone size={18} />
                                 <span className="text-sm md:text-base">(88) 99254-5339</span>
