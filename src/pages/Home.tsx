@@ -21,10 +21,10 @@ export default function Home() {
                 <div className="text-white max-w-2xl">
                     <h1 className="text-5xl font-bold mb-6">Mais que uma representação, somos o parceiro ideal para seu negócio.</h1>
                     <p className="text-xl mb-8">Fornecendo os melhores produtos para sua empresa, atuando no estado do Ceará a mais de 15 anos.</p>
-                    <button className="bg-blue-950 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-900 transition">
+                    {/* <button className="bg-blue-950 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-900 transition">
                     Saiba mais
                     <ChevronRight size={20} className="ml-2" />
-                    </button>
+                    </button> */}
                 </div>
                 </div>
             </section>
@@ -93,10 +93,10 @@ export default function Home() {
                         </div>
                         <div className="flex flex-1">
                             <form action="" className="flex flex-col gap-4 w-full">
-                                <input type="text" placeholder="Nome" className="p-4 border border-gray-300 rounded-lg w-full" />
-                                <input type="email" placeholder="Email" className="p-4 border border-gray-300 rounded-lg w-full" />
-                                <input type="text" placeholder="Assunto" className="p-4 border border-gray-300 rounded-lg w-full" />
-                                <textarea placeholder="Mensagem" className="p-4 border border-gray-300 rounded-lg w-full"></textarea>
+                                <input type="text" placeholder="Nome" required className="p-4 border border-gray-300 rounded-lg w-full" />
+                                <input type="email" placeholder="Email" required className="p-4 border border-gray-300 rounded-lg w-full" />
+                                <input type="text" placeholder="Assunto" required className="p-4 border border-gray-300 rounded-lg w-full" />
+                                <textarea placeholder="Mensagem" required className="p-4 border border-gray-300 rounded-lg w-full"></textarea>
                                 <button type="submit" className="bg-blue-950 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-900 transition w-full">Enviar <ChevronRight size={20} className="ml-2" /></button>
                             </form>
                         </div>
