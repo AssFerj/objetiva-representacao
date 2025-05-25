@@ -24,7 +24,7 @@ export default function Footer() {
               </a>
               <p className="flex items-center"> 
                 <MapPin size={18} className="mr-2" />
-                Camocim, CE
+                Rua Antonio Zeferino Veras 1685, Centro, Camocim, CE
               </p>
             </div>
           </div>

@@ -18,7 +18,7 @@ export default function Header() {
           <div className="flex items-center gap-2">
             <a href="https://www.google.com/maps/place/Camocim+CE" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <MapPin size={18} />
-              <span className="text-sm md:text-base">Camocim, CE</span>
+              <span className="text-sm md:text-base">Rua Antonio Zeferino Veras 1685, Centro, Camocim, CE</span>
             </a>
           </div>
         </div>

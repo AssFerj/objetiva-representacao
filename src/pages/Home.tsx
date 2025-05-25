@@ -1,4 +1,4 @@
-import { ChevronRight, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation as SwiperNavigation, Autoplay } from 'swiper/modules';
 import { brands } from "../data";
@@ -6,6 +6,7 @@ import { Brand } from "../types";
 import { useState } from "react";
 import 'swiper/css';
 import 'swiper/css/navigation';
+import ContactForm from "../components/ContactFrom";
 
 export default function Home() {
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
@@ -92,13 +93,7 @@ export default function Home() {
                             </div>
                         </div>
                         <div className="flex flex-1">
-                            <form action="" className="flex flex-col gap-4 w-full">
-                                <input type="text" placeholder="Nome" required className="p-4 border border-gray-300 rounded-lg w-full" />
-                                <input type="email" placeholder="Email" required className="p-4 border border-gray-300 rounded-lg w-full" />
-                                <input type="text" placeholder="Assunto" required className="p-4 border border-gray-300 rounded-lg w-full" />
-                                <textarea placeholder="Mensagem" required className="p-4 border border-gray-300 rounded-lg w-full"></textarea>
-                                <button type="submit" className="bg-blue-950 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-900 transition w-full">Enviar <ChevronRight size={20} className="ml-2" /></button>
-                            </form>
+                            <ContactForm />
                         </div>
                     </div>
                 </div>  
