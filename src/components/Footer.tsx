@@ -18,9 +18,9 @@ export default function Footer() {
                   <Phone size={18} />
                   <span className="text-sm md:text-base">(88) 99254-5339</span>
               </a>
-              <a href="mailto:contato@objetivarepresentacoes.com.br" className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
+              <a href="mailto:objetivarepresentacoescam@gmail.com" className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
                   <Mail size={18} />
-                  <span className="text-sm md:text-base">contato@objetivarepresentacoes.com.br</span>
+                  <span className="text-sm md:text-base">objetivarepresentacoescam@gmail.com</span>
               </a>
               <p className="flex items-center"> 
                 <MapPin size={18} className="mr-2" />
