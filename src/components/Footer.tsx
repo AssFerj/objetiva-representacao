@@ -14,14 +14,14 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contato</h4>
             <div className="space-y-2 text-gray-400">
-              <p className="flex items-center">
-                <Phone size={18} className="mr-2" />
-                (88) 99254-5339
-              </p>
-              <p className="flex items-center">
-                <Mail size={18} className="mr-2" />
-                contato@objetivarepresentacoes.com.br
-              </p>
+              <a href="https://wa.me/5588992545339" className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
+                  <Phone size={18} />
+                  <span className="text-sm md:text-base">(88) 99254-5339</span>
+              </a>
+              <a href="mailto:contato@objetivarepresentacoes.com.br" className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
+                  <Mail size={18} />
+                  <span className="text-sm md:text-base">contato@objetivarepresentacoes.com.br</span>
+              </a>
               <p className="flex items-center"> 
                 <MapPin size={18} className="mr-2" />
                 Camocim, CE
@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-400 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Objetiva Representações. Todos os direitos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} <span className="text-yellow-500">Objetiva Representações</span>. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

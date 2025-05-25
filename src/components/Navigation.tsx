@@ -7,10 +7,9 @@ export default function Navigation() {
             <img src="/assets/objetiva-logo.svg" alt="Objetiva Representações" className="w-40" />
           </div>
           <div className="hidden md:flex space-x-8">
-            <a href="/" className="hover:text-blue-600">Home</a>
-            {/* <a href="#about" className="text-gray-700 hover:text-blue-600">Sobre</a> */}
-            <a href="#products" className="hover:text-blue-600">Produtos</a>
-            <a href="#contact" className="hover:text-blue-600">Contato</a>
+            <a href="/" className="hover:text-yellow-500">Home</a>
+            <a href="#brands" className="hover:text-yellow-500">Representadas</a>
+            <a href="#contact" className="hover:text-yellow-500">Contato</a>
           </div>
         </div>
       </div>
