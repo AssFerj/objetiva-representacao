@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import emailjs from '@emailjs/browser';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type FormInputs = {
     name: string;
@@ -15,19 +15,23 @@ export default function ContactForm() {
     const [sent, setSent] = useState(false);
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInputs>();
 
+    useEffect(() => {
+        // Initialize EmailJS with the public key
+        emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+    }, []);
+
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
         try {
             setSending(true);
             await emailjs.send(
-                process.env.REACT_APP_EMAILJS_SERVICE_ID!,  // Service ID deve começar com 'service_'
-                process.env.REACT_APP_EMAILJS_TEMPLATE_ID!,
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
                 {
                     from_name: data.name,
                     from_email: data.email,
                     subject: data.subject,
                     message: data.message,
-                },
-                process.env.REACT_APP_EMAILJS_PUBLIC_KEY!
+                }
             );
             setSent(true);
             reset();
