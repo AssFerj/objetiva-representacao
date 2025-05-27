@@ -2,7 +2,11 @@ import Header from "./Header";
 import Navigation from "./Navigation";
 import Footer from "./Footer";
 
-export default function LayoutProvider({ children }: { children: React.ReactNode }) {
+interface PublicLayoutProps {
+  children: React.ReactNode;
+}
+
+function PublicLayout({ children }: PublicLayoutProps): JSX.Element {
   return (
     <div>
       <Header />
@@ -12,3 +16,5 @@ export default function LayoutProvider({ children }: { children: React.ReactNode
     </div>
   );
 }
+
+export default PublicLayout;
