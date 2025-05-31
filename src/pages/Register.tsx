@@ -39,12 +39,17 @@ function Register(): JSX.Element {
 
       // Cria o documento do usuário no Firestore
       const userRef = doc(db, 'users', userCredential.user.uid);
-      await setDoc(userRef, {
+      const userData = {
         name: data.name,
         email: data.email,
-        role: data.role, // Define o papel padrão como 'user'
+        role: data.role,
         createdAt: new Date().toISOString()
-      });
+      };
+      
+      await setDoc(userRef, userData);
+      
+      // Aguarda um momento para garantir que os dados foram salvos
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
       // Redireciona para o login após o registro bem-sucedido
       navigate('/login');
@@ -73,9 +78,9 @@ function Register(): JSX.Element {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="rounded-md shadow-sm -space-y-px">
+          <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="sr-only">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                 Nome completo
               </label>
               <input
@@ -88,15 +93,15 @@ function Register(): JSX.Element {
                     message: 'Nome deve ter pelo menos 3 caracteres',
                   },
                 })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Nome completo"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Digite seu nome completo"
               />
               {errors.name && (
                 <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
               )}
             </div>
             <div>
-              <label htmlFor="email" className="sr-only">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 E-mail
               </label>
               <input
@@ -109,15 +114,15 @@ function Register(): JSX.Element {
                     message: 'E-mail inválido',
                   },
                 })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="E-mail"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Digite seu e-mail"
               />
               {errors.email && (
                 <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
               )}
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                 Senha
               </label>
               <input
@@ -130,8 +135,8 @@ function Register(): JSX.Element {
                     message: 'Senha deve ter pelo menos 6 caracteres',
                   },
                 })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Senha"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Digite sua senha"
               />
               {errors.password && (
                 <p className="mt-1 text-sm text-red-600">
@@ -140,7 +145,7 @@ function Register(): JSX.Element {
               )}
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="sr-only">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-1">
                 Confirmar senha
               </label>
               <input
@@ -151,8 +156,8 @@ function Register(): JSX.Element {
                   validate: (value) =>
                     value === watch('password') || 'As senhas não conferem',
                 })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Confirmar senha"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                placeholder="Confirme sua senha"
               />
               {errors.confirmPassword && (
                 <p className="mt-1 text-sm text-red-600">
@@ -161,19 +166,23 @@ function Register(): JSX.Element {
               )}
             </div>
             <div>
-              <label htmlFor="role" className="sr-only">
-                Papel
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
+                Tipo de usuário
               </label>
               <select
                 id="role"
                 {...register('role', {
-                  required: 'Papel é obrigatório',
+                  required: 'Tipo de usuário é obrigatório',
                 })}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               >
+                <option value="">Selecione o tipo de usuário</option>
                 <option value="seller">Vendedor</option>
                 <option value="manager">Administrador</option>
               </select>
+              {errors.role && (
+                <p className="mt-1 text-sm text-red-600">{errors.role.message}</p>
+              )}
             </div>  
           </div>
 

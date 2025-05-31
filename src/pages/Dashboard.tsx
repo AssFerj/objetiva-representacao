@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import ReceiptModal from '../components/ReceiptModal';
-import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { collection, query, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { RootState } from '../store';
 import ReceiptCard from '../components/ReceiptCard';
@@ -37,31 +37,36 @@ export default function Dashboard() {
       try {
         // Create query based on user role
         const receiptsRef = collection(db, 'receipts');
-        let q;
 
-        if (user.role === 'manager') {
-          // Manager can see all receipts
-          q = query(receiptsRef, orderBy('createdAt', 'desc'));
-        } else {
-          // Seller can only see their own receipts
-          q = query(
-            receiptsRef,
-            where('userId', '==', user.id),
-            orderBy('createdAt', 'desc')
-          );
-        }
 
-        const querySnapshot = await getDocs(q);
+        // Busca todos os recibos primeiro
+        const receiptsQuery = query(receiptsRef);
+        const querySnapshot = await getDocs(receiptsQuery);
         const fetchedReceipts: Receipt[] = [];
 
         querySnapshot.forEach((doc) => {
-          fetchedReceipts.push({
+          const receipt = {
             id: doc.id,
             ...doc.data() as Omit<Receipt, 'id'>
-          });
+          };
+          
+          // Filtra baseado no papel do usuário
+          if (user.role === 'manager' || receipt.userId === user.id) {
+            fetchedReceipts.push(receipt);
+          }
+        });
+
+        // Ordena os recibos por data de criação
+        fetchedReceipts.sort((a, b) => {
+          const dateA = a.createdAt.toDate();
+          const dateB = b.createdAt.toDate();
+          return dateB.getTime() - dateA.getTime();
         });
 
         setReceipts(fetchedReceipts);
+        return;
+
+
       } catch (error) {
         console.error('Error fetching receipts:', error);
       }
