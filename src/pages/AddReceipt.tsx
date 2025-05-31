@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { CameraIcon } from '@heroicons/react/24/outline';
 import type { RootState } from '../store';
+import { db } from '../config/firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { uploadToCloudflare } from '../services/cloudflareStorage';
 
 export default function AddReceipt() {
   const navigate = useNavigate();
@@ -31,20 +34,71 @@ export default function AddReceipt() {
     }
   };
 
+  const uploadImage = async (file: File, type: 'initialKm' | 'finalKm') => {
+    if (!file) return null;
+    
+    try {
+      // Add timestamp and random string to ensure uniqueness
+      const timestamp = Date.now();
+      const random = Math.random().toString(36).substring(7);
+      const extension = file.name.split('.').pop();
+      const fileName = `${type}_${user?.email?.split('@')[0]}_${timestamp}_${random}.${extension}`;
+      
+      // Upload to Cloudflare
+      const downloadURL = await uploadToCloudflare({
+        file,
+        fileName,
+        metadata: {
+          userId: user?.id || '',
+          userEmail: user?.email || '',
+          uploadedAt: new Date().toISOString()
+        }
+      });
+      
+      return downloadURL;
+    } catch (error) {
+      console.error(`Error uploading ${type} image:`, error);
+      if (error instanceof Error) {
+        throw new Error(`Erro ao enviar imagem ${type === 'initialKm' ? 'do KM inicial' : 'do KM final'}: ${error.message}`);
+      }
+      throw new Error(`Erro ao enviar imagem ${type === 'initialKm' ? 'do KM inicial' : 'do KM final'}`);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
 
     setLoading(true);
     try {
-      // TODO: Implement Firebase upload
-      // 1. Upload images to Firebase Storage
-      // 2. Save receipt data to Firestore
-      // For now, we'll just simulate a delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Upload images sequentially to avoid CORS issues
+      let initialKmUrl = null;
+      let finalKmUrl = null;
+      
+      if (images.initialKmPhoto) {
+        initialKmUrl = await uploadImage(images.initialKmPhoto, 'initialKm');
+      }
+      
+      if (images.finalKmPhoto) {
+        finalKmUrl = await uploadImage(images.finalKmPhoto, 'finalKm');
+      }
+
+      // Save receipt data to Firestore
+      const receiptData = {
+        ...formData,
+        userId: user.id,
+        userEmail: user.email,
+        userName: user.name,
+        initialKmUrl,
+        finalKmUrl,
+        createdAt: serverTimestamp(),
+      };
+
+      await addDoc(collection(db, 'receipts'), receiptData);
       navigate('/dashboard');
     } catch (error) {
       console.error('Error saving receipt:', error);
+      alert('Erro ao salvar o abastecimento. Por favor, tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -63,7 +117,7 @@ export default function AddReceipt() {
               <input
                 required
                 type="text"
-                placeholder="Local do Abastecimento"
+                placeholder="Local do Abastecimento (Localidade + Nome do posto)"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -110,6 +164,7 @@ export default function AddReceipt() {
                   className="hidden"
                   id="initial-km-photo"
                   type="file"
+                  required
                   onChange={handleImageChange('initialKmPhoto')}
                 />
                 <label htmlFor="initial-km-photo" className="cursor-pointer">

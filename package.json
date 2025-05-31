@@ -4,17 +4,24 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "vercel-build": "vite build",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.821.0",
+    "@aws-sdk/s3-request-presigner": "^3.821.0",
     "@emailjs/browser": "^4.4.1",
+    "@google-cloud/storage": "^7.16.0",
     "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.8.2",
+    "@vercel/node": "^5.2.1",
     "dotenv": "^16.5.0",
     "firebase": "^11.8.1",
+    "formidable": "^3.5.4",
+    "googleapis": "^149.0.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -25,7 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
-    "@types/node": "^22.15.21",
+    "@types/node": "^22.15.29",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",

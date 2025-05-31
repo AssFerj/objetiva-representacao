@@ -2,21 +2,23 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
+import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
+import { db } from '../config/firebase';
 import type { RootState } from '../store';
 import ReceiptCard from '../components/ReceiptCard';
 
-// Temporary type until we create the receipt types
 interface Receipt {
   id: string;
   location: string;
-  date: string;
+  createdAt: Timestamp;
   userId: string;
+  userEmail: string;
   userName: string;
-  initialKm: number;
-  finalKm: number;
-  value: number;
-  initialKmPhotoUrl: string;
-  finalKmPhotoUrl: string;
+  initialKm: string;
+  finalKm: string;
+  value: string;
+  initialKmUrl: string;
+  finalKmUrl: string;
 }
 
 export default function Dashboard() {
@@ -26,33 +28,48 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // TODO: Fetch receipts from Firebase
-    // For now, we'll use mock data
-    const mockReceipts: Receipt[] = [
-      {
-        id: '1',
-        location: 'Posto Shell',
-        date: '2025-05-26',
-        userId: 'user1',
-        userName: 'John Doe',
-        initialKm: 50000,
-        finalKm: 50500,
-        value: 250.00,
-        initialKmPhotoUrl: 'https://example.com/photo1.jpg',
-        finalKmPhotoUrl: 'https://example.com/photo2.jpg',
-      },
-      // Add more mock data as needed
-    ];
+    const fetchReceipts = async () => {
+      if (!user) return;
 
-    // Filter receipts based on user role
-    const filteredReceipts = user?.role === 'manager' ? mockReceipts : mockReceipts.filter(receipt => receipt.userId === user?.id);
+      try {
+        // Create query based on user role
+        const receiptsRef = collection(db, 'receipts');
+        let q;
 
-    setReceipts(filteredReceipts);
+        if (user.role === 'manager') {
+          // Manager can see all receipts
+          q = query(receiptsRef, orderBy('createdAt', 'desc'));
+        } else {
+          // Seller can only see their own receipts
+          q = query(
+            receiptsRef,
+            where('userId', '==', user.id),
+            orderBy('createdAt', 'desc')
+          );
+        }
+
+        const querySnapshot = await getDocs(q);
+        const fetchedReceipts: Receipt[] = [];
+
+        querySnapshot.forEach((doc) => {
+          fetchedReceipts.push({
+            id: doc.id,
+            ...doc.data() as Omit<Receipt, 'id'>
+          });
+        });
+
+        setReceipts(fetchedReceipts);
+      } catch (error) {
+        console.error('Error fetching receipts:', error);
+      }
+    };
+
+    fetchReceipts();
   }, [user]);
 
   const filteredReceipts = receipts.filter(receipt => 
     receipt.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    receipt.userName.toLowerCase().includes(searchTerm.toLowerCase())
+    receipt.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
