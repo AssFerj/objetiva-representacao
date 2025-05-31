@@ -9,6 +9,7 @@ export const brands: Brand[] = [
   { id: 6, name: 'Petyan', logo: '/assets/brands/petyan.png' },
   { id: 7, name: 'Cristal', logo: '/assets/brands/cristal.png' },
   { id: 8, name: 'Piauí Milhos', logo: '/assets/brands/piaui.png' },
+  { id: 9, name: 'Move Lixo', logo: '/assets/brands/move-lixo.png' },
 ];
 
 export const products: Product[] = [
