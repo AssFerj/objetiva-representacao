@@ -15,6 +15,7 @@
     "@aws-sdk/s3-request-presigner": "^3.821.0",
     "@emailjs/browser": "^4.4.1",
     "@google-cloud/storage": "^7.16.0",
+    "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@vercel/node": "^5.2.1",

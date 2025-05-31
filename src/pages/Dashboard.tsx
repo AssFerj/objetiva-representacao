@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
+import ReceiptModal from '../components/ReceiptModal';
 import { collection, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import type { RootState } from '../store';
@@ -26,6 +27,8 @@ export default function Dashboard() {
   const { user } = useSelector((state: RootState) => state.auth);
   const [receipts, setReceipts] = useState<Receipt[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedReceipt, setSelectedReceipt] = useState<Receipt | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchReceipts = async () => {
@@ -103,10 +106,36 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredReceipts.map((receipt) => (
           <div key={receipt.id}>
-            <ReceiptCard receipt={receipt} />
+            <ReceiptCard 
+              receipt={receipt} 
+              onClick={() => {
+                setSelectedReceipt(receipt);
+                setIsModalOpen(true);
+              }}
+            />
           </div>
         ))}
       </div>
+
+      {selectedReceipt && (
+        <ReceiptModal
+          receipt={selectedReceipt}
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedReceipt(null);
+          }}
+          onUpdate={(updatedReceipt) => {
+            setReceipts(receipts.map(r => r.id === updatedReceipt.id ? updatedReceipt : r));
+            setSelectedReceipt(updatedReceipt);
+          }}
+          onDelete={(deletedId) => {
+            setReceipts(receipts.filter(r => r.id !== deletedId));
+            setIsModalOpen(false);
+            setSelectedReceipt(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -21,18 +21,35 @@ interface Receipt {
   finalKmUrl: string;
 }
 
-interface ReceiptCardProps {
+export interface ReceiptCardProps {
   receipt: Receipt;
+  onClick: () => void;
 }
 
-export default function ReceiptCard({ receipt }: ReceiptCardProps) {
+export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      {/* <img
-        className="w-full h-40 object-cover"
-        src={receipt.initialKmUrl || '/assets/brands/clinil.png'}
-        alt="Foto do KM inicial"
-      /> */}
+    <div 
+      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transform transition-transform duration-200 hover:scale-105"
+      onClick={onClick}
+    >
+      <div className="relative w-full h-40 bg-gray-100">
+        {receipt.initialKmUrl ? (
+          <img
+            className="w-full h-40 object-cover"
+            src={receipt.initialKmUrl}
+            alt="Foto do KM inicial"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+            Imagem inicial pendente
+          </div>
+        )}
+        {!receipt.finalKmUrl && (
+          <div className="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">
+            KM Final Pendente
+          </div>
+        )}
+      </div>
       <div className="p-4">
         <div className="space-y-4">
           {/* Location - Full width */}
