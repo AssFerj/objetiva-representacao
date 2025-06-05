@@ -1,11 +1,53 @@
-import LayoutProvider from "./components/LayoutProvider";
-import Home from "./pages/Home";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import AuthProvider from './components/AuthProvider';
+
+import { store } from './store';
+import ProtectedRoute from './components/ProtectedRoute'; 
+import PublicLayout from './components/PublicLayout';
+import DashboardLayout from './components/DashboardLayout';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
+import AddReceipt from './pages/AddReceipt';
 
 function App(): JSX.Element {
   return (
-    <LayoutProvider>
-      <Home />
-    </LayoutProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
+          <Route path="/login" element={<PublicLayout><Login /></PublicLayout>} />
+          <Route path="/registro" element={<PublicLayout><Register /></PublicLayout>} />
+          
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={['seller', 'manager']}>
+                <DashboardLayout>
+                  <Dashboard />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-receipt"
+            element={
+              <ProtectedRoute>
+                <DashboardLayout>
+                  <AddReceipt />
+                </DashboardLayout>
+              </ProtectedRoute>
+            }
+          />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
