@@ -1,10 +1,10 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface Brand {
   id: number;
   name: string;
   logo: string;
 }
-
-import { Timestamp } from 'firebase/firestore';
 
 export interface Product {
   id: number;
