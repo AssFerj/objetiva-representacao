@@ -6,11 +6,12 @@ import { store } from './store';
 import ProtectedRoute from './components/ProtectedRoute'; 
 import PublicLayout from './components/PublicLayout';
 import DashboardLayout from './components/DashboardLayout';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import AddReceipt from './pages/AddReceipt';
+import Home from './app/page';
+import Login from './app/login/page';
+import Dashboard from './app/painel/page';
+import AddReceipt from './app/painel/registrar-abastecimento/page';
+import Register from './app/registro/page';
+
 
 function App(): JSX.Element {
   return (
