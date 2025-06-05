@@ -20,19 +20,27 @@ export default function Navigation() {
               <img src="/assets/objetiva-logo.svg" alt="Objetiva Representações" className="w-40" />
             </Link>
           </div>
-          <div className="hidden md:flex space-x-8">
-            <Link href="/" className="hover:text-yellow-500">Home</Link>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center space-x-8">
+              <Link href="/" className="hover:text-yellow-500">Home</Link>
+              <Link 
+                href="/#brands" 
+                className="hover:text-yellow-500"
+              >
+                Representadas
+              </Link>
+              <Link 
+                href="/#contact" 
+                className="hover:text-yellow-500"
+              >
+                Contato
+              </Link>
+            </div>
             <Link 
-              href="/#brands" 
-              className="hover:text-yellow-500"
+              href="/login" 
+              className="bg-yellow-500 hover:bg-yellow-600 text-blue-950 px-4 py-2 rounded"
             >
-              Representadas
-            </Link>
-            <Link 
-              href="/#contact" 
-              className="hover:text-yellow-500"
-            >
-              Contato
+              Login
             </Link>
           </div>
         </div>
