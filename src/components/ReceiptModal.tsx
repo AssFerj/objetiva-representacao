@@ -147,7 +147,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                       ) : (
                         <button
                           type="button"
-                          className="rounded-md bg-white text-blue-600 hover:text-blue-700"
+                          className="rounded-md bg-white text-blue-950 hover:text-blue-700"
                           onClick={() => setIsEditing(true)}
                         >
                           <span className="sr-only">Edit</span>
@@ -188,8 +188,8 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                   <div className="w-full">
                     {/* Location */}
                     <div className="flex items-center gap-2 mb-6">
-                      <MapPinIcon className="h-6 w-6 text-blue-600" />
-                      <Dialog.Title as="h3" className="text-2xl font-semibold leading-6 text-gray-900">
+                      <MapPinIcon className="h-6 w-6 text-blue-950" />
+                      <Dialog.Title as="h3" className="text-2xl font-semibold leading-6 text-gray-950">
                         {isEditing ? (
                           <input
                             type="text"
@@ -236,7 +236,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                         >
                           {loading ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75">
-                              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+                              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-950"></div>
                             </div>
                           ) : receipt.initialKmUrl ? (
                             <img
@@ -276,7 +276,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                         >
                           {loading ? (
                             <div className="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75">
-                              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-600"></div>
+                              <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-950"></div>
                             </div>
                           ) : receipt.finalKmUrl ? (
                             <img
@@ -297,16 +297,16 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                     <div className="grid grid-cols-2 gap-4">
                       {/* User Info */}
                       <div className="flex items-center gap-2">
-                        <UserIcon className="h-5 w-5 text-blue-600" />
+                        <UserIcon className="h-5 w-5 text-blue-950" />
                         <div>
                           <p className="text-sm font-medium text-gray-500">Colaborador</p>
-                          <p className="text-base text-gray-900">{receipt.userName}</p>
+                          <p className="text-base text-gray-950">{receipt.userName}</p>
                         </div>
                       </div>
 
                       {/* Value */}
                       <div className="flex items-center gap-2">
-                        <FireIcon className="h-5 w-5 text-blue-600" />
+                        <FireIcon className="h-5 w-5 text-blue-950" />
                         <div>
                           <p className="text-sm font-medium text-gray-500">Valor abastecido</p>
                           {isEditing ? (
@@ -317,7 +317,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                               onChange={(e) => setEditForm({ ...editForm, value: e.target.value })}
                             />
                           ) : (
-                            <p className="text-base text-gray-900">
+                            <p className="text-base text-gray-950">
                               R$ {parseFloat(receipt.value).toFixed(2)}
                             </p>
                           )}
@@ -326,7 +326,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
 
                       {/* KM Info */}
                       <div className="flex items-center gap-2">
-                        <ArrowTrendingUpIcon className="h-5 w-5 text-blue-600" />
+                        <ArrowTrendingUpIcon className="h-5 w-5 text-blue-950" />
                         <div>
                           <p className="text-sm font-medium text-gray-500">Quilometragem</p>
                           {isEditing ? (
@@ -348,7 +348,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                               />
                             </div>
                           ) : (
-                            <p className="text-base text-gray-900">
+                            <p className="text-base text-gray-950">
                               {receipt.initialKm} - {receipt.finalKm}
                             </p>
                           )}
@@ -359,7 +359,7 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
                       <div className="flex items-center gap-2">
                         <div>
                           <p className="text-sm font-medium text-gray-500">Data</p>
-                          <p className="text-base text-gray-900">
+                          <p className="text-base text-gray-950">
                             {receipt.createdAt.toDate().toLocaleDateString('pt-BR')}
                           </p>
                         </div>

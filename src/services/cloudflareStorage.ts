@@ -17,7 +17,7 @@ export const uploadToCloudflare = async ({ file, fileName, metadata }: UploadFil
       formData.append('metadata', JSON.stringify(metadata));
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+    const response = await fetch('/api/upload', {
       method: 'POST',
       body: formData,
     });

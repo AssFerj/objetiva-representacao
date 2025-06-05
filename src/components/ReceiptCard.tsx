@@ -54,7 +54,7 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
         <div className="space-y-4">
           {/* Location - Full width */}
           <div className="flex items-center gap-2">
-            <MapPinIcon className="h-5 w-5 text-blue-600" />
+            <MapPinIcon className="h-5 w-5 text-blue-950" />
             <h2 className="text-xl font-semibold">
               {receipt.location}
             </h2>
@@ -64,7 +64,7 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
           <div className="grid grid-cols-2 gap-4">
             {/* User Name */}
             <div className="flex items-center gap-2">
-              <UserIcon className="h-5 w-5 text-blue-600" />
+              <UserIcon className="h-5 w-5 text-blue-950" />
               <span className="text-gray-600 truncate">
                 {receipt.userName}
               </span>
@@ -72,7 +72,7 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
 
             {/* Distance */}
             <div className="flex items-center gap-2">
-              <ArrowTrendingUpIcon className="h-5 w-5 text-blue-600" />
+              <ArrowTrendingUpIcon className="h-5 w-5 text-blue-950" />
               <span className="text-gray-700">
                 {parseInt(receipt.finalKm) - parseInt(receipt.initialKm)} km
               </span>
@@ -80,8 +80,8 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
 
             {/* Value */}
             <div className="flex items-center gap-2">
-              <FireIcon className="h-5 w-5 text-blue-600" />
-              <span className="text-xl font-semibold text-blue-600">
+              <FireIcon className="h-5 w-5 text-blue-950" />
+              <span className="text-xl font-semibold text-blue-950">
                 R$ {parseFloat(receipt.value).toFixed(2)}
               </span>
             </div>

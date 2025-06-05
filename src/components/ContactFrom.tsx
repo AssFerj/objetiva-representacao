@@ -1,3 +1,5 @@
+'use client'
+
 import { ChevronRight } from "lucide-react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import emailjs from '@emailjs/browser';
@@ -16,16 +18,30 @@ export default function ContactForm() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInputs>();
 
     useEffect(() => {
-        // Initialize EmailJS with the public key
-        emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+        if (publicKey) {
+            emailjs.init(publicKey);
+        } else {
+            console.error('EmailJS Public Key is not defined. Email functionality will be disabled.');
+        }
     }, []);
 
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+
+        if (!serviceId || !templateId) {
+            console.error('EmailJS Service ID or Template ID is not defined. Cannot send email.');
+            alert('Configuration error: Unable to send message at this time.');
+            setSending(false); // Ensure sending state is reset
+            return;
+        }
+
         try {
             setSending(true);
             await emailjs.send(
-                import.meta.env.VITE_EMAILJS_SERVICE_ID,
-                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+                serviceId,
+                templateId,
                 {
                     from_name: data.name,
                     from_email: data.email,

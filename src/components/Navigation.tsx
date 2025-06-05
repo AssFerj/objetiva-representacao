@@ -1,48 +1,36 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+'use client'
+
+import Link from 'next/link';
+
 
 export default function Navigation() {
-  const location = useLocation();
-  const navigate = useNavigate();
+  // const pathname = usePathname(); // Kept for potential future use with active link styling
+  // const router = useRouter(); // Kept for potential future use
 
-  useEffect(() => {
-    // Se tiver uma seção no state, faz o scroll após um pequeno delay
-    if (location.state?.section) {
-      const timer = setTimeout(() => {
-        const element = document.getElementById(location.state.section);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-          // Limpa o state após o scroll
-          navigate(location.pathname, { replace: true, state: {} });
-        }
-      }, 100); // Pequeno delay para garantir que o componente Home montou
-
-      return () => clearTimeout(timer);
-    }
-  }, [location.state, navigate, location.pathname]);
+  // useEffect(() => {
+  //   // TODO: Re-implement section scrolling with Next.js patterns (e.g., query params or hash)
+  // }, [pathname, router]);
 
   return (
     <nav className="bg-blue-950 text-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
-            <Link to="/">
+            <Link href="/">
               <img src="/assets/objetiva-logo.svg" alt="Objetiva Representações" className="w-40" />
             </Link>
           </div>
           <div className="hidden md:flex space-x-8">
-            <Link to="/" className="hover:text-yellow-500">Home</Link>
+            <Link href="/" className="hover:text-yellow-500">Home</Link>
             <Link 
-              to="/" 
+              href="/#brands" 
               className="hover:text-yellow-500"
-              state={{ section: 'brands' }}
             >
               Representadas
             </Link>
             <Link 
-              to="/" 
+              href="/#contact" 
               className="hover:text-yellow-500"
-              state={{ section: 'contact' }}
             >
               Contato
             </Link>
