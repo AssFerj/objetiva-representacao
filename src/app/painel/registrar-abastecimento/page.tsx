@@ -1,17 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CameraIcon } from '@heroicons/react/24/outline';
-import type { RootState } from '@/store';
+import type { AppDispatch, RootState } from '@/store';
 import { db } from '@/config/firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { uploadToCloudflare } from '@/services/cloudflareStorage';
+import { Receipt } from '@/types';
+import { addReceipt } from '@/store/slices/receiptSlice';
+interface Seller {
+  uid: string;
+  displayName: string | null;
+  email: string | null;
+}
 
 export default function AddReceipt() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
+  const [users, setUsers] = useState<Seller[]>([]);
+  const [selectedUserId, setSelectedUserId] = useState('');
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, where('role', '==', 'seller'));
+        const querySnapshot = await getDocs(q);
+        const usersList: Seller[] = querySnapshot.docs.map(doc => ({
+          uid: doc.id,
+          displayName: doc.data().name || null,
+          email: doc.data().email || null,
+        }));
+        setUsers(usersList);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []);
   
   const [formData, setFormData] = useState({
     location: '',
@@ -71,32 +100,62 @@ export default function AddReceipt() {
     e.preventDefault();
     if (!user) return;
 
+    if (!images.initialKmPhoto) {
+      alert('A foto do KM inicial é obrigatória.');
+      return;
+    }
+
     setLoading(true);
     try {
-      // Upload images sequentially to avoid CORS issues
-      let initialKmUrl = null;
-      let finalKmUrl = null;
-      
-      if (images.initialKmPhoto) {
-        initialKmUrl = await uploadImage(images.initialKmPhoto, 'initialKm');
-      }
-      
-      if (images.finalKmPhoto) {
-        finalKmUrl = await uploadImage(images.finalKmPhoto, 'finalKm');
+      const initialKmUrl = await uploadImage(images.initialKmPhoto, 'initialKm');
+      const finalKmUrl = images.finalKmPhoto ? await uploadImage(images.finalKmPhoto, 'finalKm') : null;
+
+      if (!initialKmUrl) {
+        throw new Error('Falha ao fazer upload da imagem do KM inicial.');
       }
 
-      // Save receipt data to Firestore
-      const receiptData = {
-        ...formData,
-        userId: user.id,
-        userEmail: user.email,
-        userName: user.name,
+      let receiptOwner: { id: string; name: string; email: string; };
+
+      if (user.role === 'seller') {
+        receiptOwner = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
+      } else {
+        if (!selectedUserId) {
+          alert('Por favor, selecione um vendedor.');
+          setLoading(false);
+          return;
+        }
+        const selectedUser = users.find(u => u.uid === selectedUserId);
+        if (!selectedUser) {
+          throw new Error('Vendedor selecionado não encontrado.');
+        }
+        receiptOwner = {
+          id: selectedUser.uid,
+          name: selectedUser.displayName || '',
+          email: selectedUser.email || '',
+        };
+      }
+
+      const newReceipt: Omit<Receipt, 'id'> = {
+        location: formData.location,
+        initialKm: Number(formData.initialKm),
+        finalKm: Number(formData.finalKm),
+        value: Number(formData.value),
+        userId: receiptOwner.id,
+        userEmail: receiptOwner.email,
+        userName: receiptOwner.name,
         initialKmUrl,
         finalKmUrl,
-        createdAt: serverTimestamp(),
+        status: 'pending',
+        createdAt: new Date().toISOString(),
       };
 
-      await addDoc(collection(db, 'receipts'), receiptData);
+      await dispatch(addReceipt(newReceipt as Receipt)).unwrap();
+      
+      alert('Abastecimento registrado com sucesso!');
       router.push('/painel');
     } catch (error) {
       console.error('Error saving receipt:', error);
@@ -115,6 +174,22 @@ export default function AddReceipt() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="sm:col-span-2">
+              <select
+                required
+                value={selectedUserId}
+                onChange={(e) => setSelectedUserId(e.target.value)}
+                className={`w-full px-3 py-2 text-gray-400 border border-gray-300 bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${user?.role === 'seller' ? 'hidden' : ''}`}
+              >
+                <option className='text-gray-400' value="">Selecione um vendedor</option>
+                {users.map((u) => (
+                  <option className='text-gray-400' key={u.uid} value={u.uid}>
+                    {u.displayName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="sm:col-span-2">
               <input
                 required

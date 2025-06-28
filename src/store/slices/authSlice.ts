@@ -55,6 +55,9 @@ export const login = createAsyncThunk(
       console.error('Erro de autenticação:', authError);
       if (authError instanceof Error && 'code' in authError) {
         const errorCode = (authError as { code: string }).code;
+        if (errorCode === 'auth/invalid-credential') {
+          return rejectWithValue('E-mail ou senha inválidos');
+        }
         return rejectWithValue(
           errorCode === 'auth/user-not-found'
             ? 'Usuário não encontrado'

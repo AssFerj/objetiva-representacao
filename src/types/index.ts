@@ -1,5 +1,3 @@
-import { Timestamp } from 'firebase/firestore';
-
 export interface Brand {
   id: number;
   name: string;
@@ -17,12 +15,13 @@ export interface Receipt {
   id: string;
   location: string;
   userName: string;
+  userEmail: string;
   userId: string;
-  value: string;
-  initialKm: string;
-  finalKm: string;
+  value: number;
+  initialKm: number;
+  finalKm: number;
   initialKmUrl?: string;
-  finalKmUrl?: string;
-  date: Timestamp;
-  createdAt: Timestamp;
+  finalKmUrl?: string | null;
+  status: string;
+  createdAt: string;
 }
