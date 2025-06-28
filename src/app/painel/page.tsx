@@ -70,11 +70,18 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-7xl">
+    <div className="container mx-auto px-4 py-8 max-w-7xl"> 
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">
-          Dashboard
-        </h1>
+        <div className="flex flex-col">
+          <h1 className="text-3xl font-bold text-blue-950">
+            Dashboard
+          </h1>
+          {user && (
+            <p className="text-gray-600">
+              Olá, {user.name}!
+            </p>
+          )}
+        </div>
         <button
           className="flex items-center gap-2 bg-blue-950 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
           onClick={() => router.push('/painel/registrar-abastecimento')}
