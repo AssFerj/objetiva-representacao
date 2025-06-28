@@ -5,21 +5,7 @@ import {
   FireIcon,
 } from '@heroicons/react/24/outline';
 
-import { Timestamp } from 'firebase/firestore';
-
-interface Receipt {
-  id: string;
-  location: string;
-  createdAt: Timestamp;
-  userId: string;
-  userEmail: string;
-  userName: string;
-  initialKm: string;
-  finalKm: string;
-  value: string;
-  initialKmUrl: string;
-  finalKmUrl: string;
-}
+import { Receipt } from '@/types';
 
 export interface ReceiptCardProps {
   receipt: Receipt;
@@ -74,7 +60,7 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
             <div className="flex items-center gap-2">
               <ArrowTrendingUpIcon className="h-5 w-5 text-blue-950" />
               <span className="text-gray-700">
-                {parseInt(receipt.finalKm) - parseInt(receipt.initialKm)} km
+                {receipt.finalKm - receipt.initialKm} km
               </span>
             </div>
 
@@ -82,14 +68,14 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
             <div className="flex items-center gap-2">
               <FireIcon className="h-5 w-5 text-blue-950" />
               <span className="text-xl font-semibold text-blue-950">
-                R$ {parseFloat(receipt.value).toFixed(2)}
+                R$ {receipt.value.toFixed(2)}
               </span>
             </div>
 
             {/* Date */}
             <div className="flex items-center">
               <span className="text-sm text-gray-500">
-                Data: {receipt.createdAt.toDate().toLocaleDateString('pt-BR')}
+                Data: {new Date(receipt.createdAt).toLocaleDateString('pt-BR')}
               </span>
             </div>
           </div>

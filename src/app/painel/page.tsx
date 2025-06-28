@@ -9,22 +9,9 @@ import { db } from '@/config/firebase';
 import type { RootState } from '@/store';
 import ReceiptCard from '@/components/ReceiptCard';
 import ReceiptModal from '@/components/ReceiptModal';
+import { Receipt } from '@/types';
 
-interface Receipt {
-  id: string;
-  location: string;
-  createdAt: Timestamp;
-  userId: string;
-  userEmail: string;
-  userName: string;
-  initialKm: string;
-  finalKm: string;
-  value: string;
-  initialKmUrl: string;
-  finalKmUrl: string;
-}
-
-export default function Dashboard() {   
+export default function Dashboard() {
   const router = useRouter();
   const { user } = useSelector((state: RootState) => state.auth);
   const [receipts, setReceipts] = useState<Receipt[]>([]);
@@ -37,38 +24,38 @@ export default function Dashboard() {
       if (!user) return;
 
       try {
-        // Create query based on user role
         const receiptsRef = collection(db, 'receipts');
-
-
-        // Busca todos os recibos primeiro
         const receiptsQuery = query(receiptsRef);
         const querySnapshot = await getDocs(receiptsQuery);
-        const fetchedReceipts: Receipt[] = [];
 
-        querySnapshot.forEach((doc) => {
-          const receipt = {
+        // Define a type for the raw data from Firestore to ensure type safety
+        type FirestoreReceipt = Omit<Receipt, 'id' | 'createdAt'> & { createdAt: Timestamp };
+
+        const allReceipts = querySnapshot.docs.map(doc => {
+          const data = doc.data() as FirestoreReceipt;
+          return {
             id: doc.id,
-            ...doc.data() as Omit<Receipt, 'id'>
+            ...data,
           };
-          
-          // Filtra baseado no papel do usuário
-          if (user.role === 'manager' || receipt.userId === user.id) {
-            fetchedReceipts.push(receipt);
-          }
         });
 
-        // Ordena os recibos por data de criação
-        fetchedReceipts.sort((a, b) => {
+        const userReceipts = allReceipts.filter(receipt =>
+          user.role === 'manager' || receipt.userId === user.id
+        );
+
+        userReceipts.sort((a, b) => {
           const dateA = a.createdAt.toDate();
           const dateB = b.createdAt.toDate();
           return dateB.getTime() - dateA.getTime();
         });
 
+        // Map to the final Receipt type for the UI state, converting Timestamp to a string
+        const fetchedReceipts: Receipt[] = userReceipts.map(r => ({
+          ...r,
+          createdAt: r.createdAt.toDate().toISOString(),
+        }));
+
         setReceipts(fetchedReceipts);
-        return;
-
-
       } catch (error) {
         console.error('Error fetching receipts:', error);
       }
@@ -77,7 +64,7 @@ export default function Dashboard() {
     fetchReceipts();
   }, [user]);
 
-  const filteredReceipts = receipts.filter(receipt => 
+  const filteredReceipts = receipts.filter(receipt =>
     receipt.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
     receipt.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -113,8 +100,8 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredReceipts.map((receipt) => (
           <div key={receipt.id}>
-            <ReceiptCard 
-              receipt={receipt} 
+            <ReceiptCard
+              receipt={receipt}
               onClick={() => {
                 setSelectedReceipt(receipt);
                 setIsModalOpen(true);
