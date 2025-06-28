@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import ContactForm from "@/components/ContactFrom";
 import { phoneMask } from "@/utils/phoneMask";
+import { motion } from "motion/react"
 
 export default function HomePage() {
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
@@ -24,21 +25,47 @@ export default function HomePage() {
             }}>
                 <div className="absolute inset-0 bg-black bg-opacity-50"></div>
                 <div className="container mx-auto px-4 h-full flex items-center relative">
-                <div className="text-white max-w-2xl">
-                    <h1 className="text-5xl font-bold mb-6">Mais que uma representação, somos o parceiro ideal para seu negócio.</h1>
-                    <p className="text-xl mb-8">Fornecendo os melhores produtos para sua empresa, atuando no estado do Ceará a mais de 15 anos.</p>
-                    {/* <button className="bg-blue-950 text-white px-8 py-3 rounded-full flex items-center hover:bg-blue-900 transition">
-                    Saiba mais
-                    <ChevronRight size={20} className="ml-2" />
-                    </button> */}
-                </div>
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        viewport={{ once: true }}
+                        className="text-white max-w-2xl"
+                    >
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            viewport={{ once: true }}
+                            className="text-5xl font-bold mb-6"
+                        >
+                            Mais que uma representação, somos o parceiro ideal para seu negócio.
+                        </motion.h1>
+                        <motion.p 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                            viewport={{ once: true }}
+                            className="text-xl mb-8"
+                        >
+                            Fornecendo os melhores produtos para sua empresa, atuando no estado do Ceará a mais de 15 anos.
+                        </motion.p>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Brands and Products Section */}
             <section id="brands" className="py-16">
                 <div className="container mx-auto px-4">
-                <h2 className="text-5xl text-blue-950 font-bold text-center mb-16">Representamos as Marcas</h2>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        viewport={{ once: true }}
+                        className="text-5xl text-blue-950 font-bold text-center mb-16"
+                    >
+                        Representamos as Marcas
+                    </motion.h2>
                 
                 {/* Brands Slider */}
                 <div className="mb-16">
@@ -79,9 +106,29 @@ export default function HomePage() {
 
             {/* Contact Section */}
             <section id="contact" className="p-16 bg-gray-50">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-5xl text-blue-950 font-bold text-center mb-16">Entre em Contato</h2>
-                    <div className="flex flex-col md:flex-row justify-center gap-8">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    viewport={{ once: true }}
+                    className="container mx-auto px-4"
+                >
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        className="text-5xl text-blue-950 font-bold text-center mb-16"
+                    >
+                        Entre em Contato
+                    </motion.h2>
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.4 }}
+                        viewport={{ once: true }}
+                        className="flex flex-col md:flex-row justify-center gap-8"
+                    >
                         <div className="flex flex-1 flex-col items-start gap-2 md:gap-4">
                             <p className="text-gray-600 mb-4 max-w-[300px]">Seu empreendimento precisa de produtos de alta qualidade com ótimo custo benefício?<br/>Então não hesite em entrar em contato, nossos mix vai ajudar a elevar seus resultados.</p>
                             <a href={`https://wa.me/55${contactPhone}`} className="flex items-center gap-2 hover:text-blue-950 transition" target="_blank" rel="noopener noreferrer">
@@ -100,8 +147,8 @@ export default function HomePage() {
                         <div className="flex flex-1">
                             <ContactForm />
                         </div>
-                    </div>
-                </div>  
+                    </motion.div>
+                </motion.div>  
             </section>
 
             {/* Location Section */}

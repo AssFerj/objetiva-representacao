@@ -13,6 +13,7 @@ Este é um projeto para portfólio que contém um site institucional modelo para
 - **Registro de Abastecimento**: Formulário intuitivo para que os vendedores registrem novos abastecimentos, com campos para localização, valor, quilometragem inicial e final.
 - **Upload de Imagens**: Funcionalidade de upload de fotos da quilometragem (inicial e final) diretamente para o armazenamento em nuvem (Cloudflare R2), garantindo a veracidade dos dados.
 - **Edição e Gerenciamento de Recibos**: Um modal interativo permite visualizar detalhes, editar informações e excluir recibos.
+- **Animações Dinâmicas**: Implementação de animações que são ativadas com o scroll do usuário, utilizando Framer Motion para uma experiência de navegação mais fluida e interativa.
 - **Busca e Filtragem**: Funcionalidade de busca no painel para filtrar recibos por localização ou usuário.
 - **Design Responsivo**: Interface moderna e totalmente responsiva, construída com Tailwind CSS.
 - **Feedback Visual com Notificações**: Utilização de toasts (react-toastify) para fornecer feedback instantâneo sobre o resultado das ações do usuário (login, logout, registro, criação, edição e exclusão de dados).
