@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '@/config/firebase';
@@ -24,8 +26,10 @@ function Register(): JSX.Element {
     watch,
     setError,
   } = useForm<RegisterFormData>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: RegisterFormData) => {
+    setIsLoading(true);
     try {
       // Cria o usuário no Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(
@@ -45,29 +49,35 @@ function Register(): JSX.Element {
         name: data.name,
         email: data.email,
         role: data.role,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
       };
-      
+
       await setDoc(userRef, userData);
-      
-      // Aguarda um momento para garantir que os dados foram salvos
-      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      toast.success('Conta criada com sucesso! Redirecionando...');
+
+      // Aguarda um momento para garantir que os dados foram salvos e o toast é visível
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Redireciona para o login após o registro bem-sucedido
       router.push('/login');
     } catch (error) {
       const firebaseError = error as { code: string };
       if (firebaseError.code === 'auth/email-already-in-use') {
+        toast.error('Este e-mail já está em uso.');
         setError('email', {
           type: 'manual',
           message: 'Este e-mail já está em uso',
         });
       } else {
+        toast.error('Erro ao criar conta. Tente novamente.');
         setError('root', {
           type: 'manual',
           message: 'Erro ao criar conta. Tente novamente.',
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -197,9 +207,28 @@ function Register(): JSX.Element {
           <div>
             <button
               type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-950 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 transition-colors duration-200"
+              disabled={isLoading}
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-950 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Criar conta
+              {isLoading ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Criando...
+                </>
+              ) : (
+                'Criar conta'
+              )}
             </button>
             <button
               type="button"

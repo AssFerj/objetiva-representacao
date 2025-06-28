@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login } from '@/store/slices/authSlice';
 import type { AppDispatch, RootState } from '@/store';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function Login() {
   const router = useRouter();
@@ -26,8 +27,10 @@ export default function Login() {
     e.preventDefault();
     try {
       await dispatch(login(formData)).unwrap();
+      toast.success('Login bem-sucedido!');
       router.push('/painel');
     } catch (error) {
+      toast.error('E-mail ou senha inválidos.');
       console.error('Login error:', error);
     }
   };

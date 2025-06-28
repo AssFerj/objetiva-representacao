@@ -60,7 +60,7 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
             <div className="flex items-center gap-2">
               <ArrowTrendingUpIcon className="h-5 w-5 text-blue-950" />
               <span className="text-gray-700">
-                {receipt.finalKm - receipt.initialKm} km
+                {Number(receipt.finalKm) - Number(receipt.initialKm)} km
               </span>
             </div>
 
@@ -68,7 +68,7 @@ export default function ReceiptCard({ receipt, onClick }: ReceiptCardProps) {
             <div className="flex items-center gap-2">
               <FireIcon className="h-5 w-5 text-blue-950" />
               <span className="text-xl font-semibold text-blue-950">
-                R$ {receipt.value.toFixed(2)}
+                R$ {Number(receipt.value).toFixed(2)}
               </span>
             </div>
 

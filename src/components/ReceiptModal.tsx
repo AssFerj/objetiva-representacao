@@ -13,6 +13,7 @@ import {
   CalendarIcon,
 } from '@heroicons/react/24/outline';
 import { Timestamp } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 import type { RootState } from '@/store';
 import { Receipt } from '@/types';
@@ -85,10 +86,11 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
       const updatedReceipt = { ...receipt, ...updatedField } as Receipt;
       setReceipt(updatedReceipt);
       onUpdate?.(updatedReceipt);
+      toast.success('Imagem enviada com sucesso!');
 
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Erro ao fazer upload da imagem.');
+      toast.error('Erro ao fazer upload da imagem.');
     } finally {
       setLoading(false);
     }
@@ -111,10 +113,11 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
       setReceipt(updatedReceipt);
       onUpdate?.(updatedReceipt);
       setIsEditing(false);
+      toast.success('Abastecimento atualizado com sucesso!');
 
     } catch (error) {
       console.error('Error saving receipt:', error);
-      alert('Erro ao salvar as alterações.');
+      toast.error('Erro ao salvar as alterações.');
     }
   };
 
@@ -124,11 +127,12 @@ export default function ReceiptModal({ receipt: initialReceipt, isOpen, onClose,
     }
     try {
       await deleteReceipt(receipt.id);
+      toast.success('Abastecimento deletado com sucesso!');
       onDelete?.(receipt.id);
       onClose();
     } catch (error) {
       console.error('Error deleting receipt:', error);
-      alert('Erro ao deletar o abastecimento.');
+      toast.error('Erro ao deletar o abastecimento.');
     }
   };
 

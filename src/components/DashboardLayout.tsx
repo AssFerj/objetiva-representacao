@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { toast } from 'react-toastify';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -19,8 +20,10 @@ function DashboardLayout({ children }: DashboardLayoutProps): JSX.Element {
       await signOut(auth);
       router.push('/login');
     } catch (error) {
+      toast.error('Erro ao fazer logout.');
       console.error('Erro ao fazer logout:', error);
     } finally {
+      toast.success('Logout realizado com sucesso!');
       setIsLoggingOut(false);
     }
   };

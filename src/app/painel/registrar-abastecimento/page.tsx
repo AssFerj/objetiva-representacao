@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { CameraIcon } from '@heroicons/react/24/outline';
+import { toast } from 'react-toastify';
 import type { AppDispatch, RootState } from '@/store';
 import { db } from '@/config/firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
@@ -101,7 +102,7 @@ export default function AddReceipt() {
     if (!user) return;
 
     if (!images.initialKmPhoto) {
-      alert('A foto do KM inicial é obrigatória.');
+      toast.warn('A foto do KM inicial é obrigatória.');
       return;
     }
 
@@ -124,7 +125,7 @@ export default function AddReceipt() {
         };
       } else {
         if (!selectedUserId) {
-          alert('Por favor, selecione um vendedor.');
+          toast.warn('Por favor, selecione um vendedor.');
           setLoading(false);
           return;
         }
@@ -155,11 +156,12 @@ export default function AddReceipt() {
 
       await dispatch(addReceipt(newReceipt as Receipt)).unwrap();
       
-      alert('Abastecimento registrado com sucesso!');
+      toast.success('Abastecimento registrado com sucesso!');
       router.push('/painel');
     } catch (error) {
       console.error('Error saving receipt:', error);
-      alert('Erro ao salvar o abastecimento. Por favor, tente novamente.');
+      const errorMessage = error instanceof Error ? error.message : 'Por favor, tente novamente.';
+      toast.error(`Erro ao salvar o abastecimento: ${errorMessage}`);
     } finally {
       setLoading(false);
     }

@@ -9,9 +9,12 @@ import { useState } from "react";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import ContactForm from "@/components/ContactFrom";
+import { phoneMask } from "@/utils/phoneMask";
 
 export default function HomePage() {
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
+    const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL!;
+    const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE!;
 
     return (
         <div className="min-h-screen bg-white">
@@ -81,13 +84,13 @@ export default function HomePage() {
                     <div className="flex flex-col md:flex-row justify-center gap-8">
                         <div className="flex flex-1 flex-col items-start gap-2 md:gap-4">
                             <p className="text-gray-600 mb-4 max-w-[300px]">Seu empreendimento precisa de produtos de alta qualidade com ótimo custo benefício?<br/>Então não hesite em entrar em contato, nossos mix vai ajudar a elevar seus resultados.</p>
-                            <a href="https://wa.me/5588992545339" className="flex items-center gap-2 hover:text-blue-950 transition" target="_blank" rel="noopener noreferrer">
+                            <a href={`https://wa.me/55${contactPhone}`} className="flex items-center gap-2 hover:text-blue-950 transition" target="_blank" rel="noopener noreferrer">
                                 <Phone size={18} />
-                                <span className="text-sm md:text-base">(88) 99254-5339</span>
+                                <span className="text-sm md:text-base">{phoneMask(contactPhone)}</span>
                             </a>
-                            <a href="mailto:objetivarepresentacoescam@gmail.com" className="flex items-center gap-2 hover:text-blue-950 transition" target="_blank" rel="noopener noreferrer">
+                            <a href={`mailto:${contactEmail}`} className="flex items-center gap-2 hover:text-blue-950 transition" target="_blank" rel="noopener noreferrer">
                                 <Mail size={18} />
-                                <span className="text-sm md:text-base">objetivarepresentacoescam@gmail.com</span>
+                                <span className="text-sm md:text-base">{contactEmail}</span>
                             </a>
                             <div className="flex items-center gap-2">
                                 <MapPin size={18} />

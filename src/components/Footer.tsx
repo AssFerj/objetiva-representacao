@@ -1,6 +1,10 @@
 import { Phone, Mail, MapPin } from "lucide-react";
+import { phoneMask } from "../utils/phoneMask";
 
 export default function Footer() {
+    const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL!;
+    const contactPhone = process.env.NEXT_PUBLIC_CONTACT_PHONE!;
+
   return (
     <footer className="bg-blue-950 text-white py-12">
       <div className="container mx-auto px-4">
@@ -14,13 +18,13 @@ export default function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contato</h4>
             <div className="space-y-2 text-gray-400">
-              <a href="https://wa.me/5588992545339" className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
+              <a href={`https://wa.me/55${contactPhone}`} className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
                   <Phone size={18} />
-                  <span className="text-sm md:text-base">(88) 99254-5339</span>
+                  <span className="text-sm md:text-base">{phoneMask(contactPhone)}</span>
               </a>
-              <a href="mailto:objetivarepresentacoescam@gmail.com" className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
+              <a href={`mailto:${contactEmail}`} className="flex items-center gap-2 hover:text-yellow-500 transition" target="_blank" rel="noopener noreferrer">
                   <Mail size={18} />
-                  <span className="text-sm md:text-base">objetivarepresentacoescam@gmail.com</span>
+                  <span className="text-sm md:text-base">{contactEmail}</span>
               </a>
               <p className="flex items-center"> 
                 <MapPin size={18} className="mr-2" />
