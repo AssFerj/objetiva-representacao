@@ -1,4 +1,4 @@
-# Institucional e Sistema de Gestão de Abastecimentos
+# Site Institucional e Sistema de Gestão de Abastecimentos
 
 Este é um projeto para portfólio que contém um site institucional modelo para a Objetiva Representações com sistema para gerenciamento de recibos de abastecimento, projetado para otimizar o controle de despesas de combustível para equipes de vendas. A aplicação permite que vendedores registrem seus abastecimentos, incluindo fotos das quilometragens inicial e final da rota, e que gestores visualizem e gerenciem todos os registros em um painel centralizado.
 
