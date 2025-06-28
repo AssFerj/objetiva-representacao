@@ -12,8 +12,9 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8">
           <motion.div 
             initial={{ opacity: 0 }} 
-            transition={{ duration: 1 }} 
+            transition={{ duration: 1, delay: 0.6 }} 
             whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
           >
             <div className="flex items-center mb-4">
               <img src="/assets/objetiva-logo.svg" alt="Objetiva Representações" className="w-40" />
@@ -22,8 +23,9 @@ export default function Footer() {
           </motion.div>
           <motion.div 
             initial={{ opacity: 0 }} 
-            transition={{ duration: 1 }} 
+            transition={{ duration: 1, delay: 0.6 }} 
             whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
           >
             <h4 className="text-lg font-semibold mb-4">Contato</h4>
             <div className="space-y-2 text-gray-400">
@@ -43,8 +45,9 @@ export default function Footer() {
           </motion.div>
           <motion.div 
             initial={{ opacity: 0 }} 
-            transition={{ duration: 1 }} 
+            transition={{ duration: 1, delay: 0.6 }} 
             whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
           >
             <h4 className="text-lg font-semibold mb-4">Horário de Atendimento</h4>
             <p className="text-gray-400">Segunda a Sexta: 8h às 18h</p>
@@ -53,8 +56,9 @@ export default function Footer() {
         </div>
         <motion.div 
           initial={{ opacity: 0 }} 
-          transition={{ duration: 1 }} 
+          transition={{ duration: 1, delay: 0.8 }} 
           whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           className="border-t border-gray-400 mt-8 pt-8 text-center text-gray-400"
         >
           <p>&copy; {new Date().getFullYear()} <span className="text-yellow-500">Objetiva Representações</span>. Todos os direitos reservados.</p>

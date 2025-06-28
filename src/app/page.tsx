@@ -60,7 +60,7 @@ export default function HomePage() {
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
+                        transition={{ duration: 0.5, delay: 0.6 }}
                         viewport={{ once: true }}
                         className="text-5xl text-blue-950 font-bold text-center mb-16"
                     >
@@ -109,14 +109,14 @@ export default function HomePage() {
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                    transition={{ duration: 0.5, delay: 0.6 }}
                     viewport={{ once: true }}
                     className="container mx-auto px-4"
                 >
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
+                        transition={{ duration: 0.5, delay: 0.6 }}
                         viewport={{ once: true }}
                         className="text-5xl text-blue-950 font-bold text-center mb-16"
                     >
@@ -125,7 +125,7 @@ export default function HomePage() {
                     <motion.div 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
+                        transition={{ duration: 0.5, delay: 0.6 }}
                         viewport={{ once: true }}
                         className="flex flex-col md:flex-row justify-center gap-8"
                     >
