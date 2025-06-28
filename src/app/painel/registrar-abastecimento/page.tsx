@@ -241,8 +241,7 @@ export default function AddReceipt() {
                   className="hidden"
                   id="initial-km-photo"
                   type="file"
-                  required
-                  onChange={handleImageChange('initialKmPhoto')}
+                  required                  onChange={handleImageChange('initialKmPhoto')}
                 />
                 <label htmlFor="initial-km-photo" className="cursor-pointer">
                   <div className="p-2 rounded-full hover:bg-gray-100 transition-colors">

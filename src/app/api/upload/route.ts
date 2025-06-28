@@ -30,6 +30,23 @@ const s3Client = new S3Client({
 });
 
 export async function POST(request: NextRequest) {
+  if (
+    !CLOUDFLARE_ACCOUNT_ID ||
+    !CLOUDFLARE_ACCESS_KEY_ID ||
+    !CLOUDFLARE_SECRET_ACCESS_KEY ||
+    !CLOUDFLARE_BUCKET_NAME ||
+    !CLOUDFLARE_PUBLIC_URL
+  ) {
+    console.error("Cloudflare R2 environment variables are not fully configured.");
+    return NextResponse.json(
+      {
+        error: 'Service Unavailable: Cloudflare R2 storage is not configured.',
+        details: 'The server is missing required environment variables for file storage.'
+      },
+      { status: 503 }
+    );
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
