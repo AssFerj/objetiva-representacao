@@ -11,7 +11,7 @@ Este é um projeto para portfólio que contém um site institucional modelo para
   - **Gestores (Managers)**: Têm acesso a todos os recibos registrados no sistema.
   - **Vendedores (Sellers)**: Visualizam apenas os seus próprios registros.
 - **Registro de Abastecimento**: Formulário intuitivo para que os vendedores registrem novos abastecimentos, com campos para localização, valor, quilometragem inicial e final.
-- **Upload de Imagens**: Funcionalidade de upload de fotos do odômetro (inicial e final) diretamente para o armazenamento em nuvem (Cloudflare R2), garantindo a veracidade dos dados.
+- **Upload de Imagens**: Funcionalidade de upload de fotos da quilometragem (inicial e final) diretamente para o armazenamento em nuvem (Cloudflare R2), garantindo a veracidade dos dados.
 - **Edição e Gerenciamento de Recibos**: Um modal interativo permite visualizar detalhes, editar informações e excluir recibos.
 - **Busca e Filtragem**: Funcionalidade de busca no painel para filtrar recibos por localização ou usuário.
 - **Design Responsivo**: Interface moderna e totalmente responsiva, construída com Tailwind CSS.
