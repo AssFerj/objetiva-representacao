@@ -118,13 +118,13 @@ export default function Login() {
                 'Entrar'
               )}
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={() => router.push('/registro')}
               className="mt-4 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-950 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 transition-colors duration-200"
             >   
               Ir para o Registro
-            </button>
+            </button> */}
           </div>
         </form>
       </div>
